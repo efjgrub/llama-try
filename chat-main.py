@@ -53,5 +53,6 @@ def main(
     
 
 if __name__ == "__main__":
+    global generator
     fire.Fire(main)
 

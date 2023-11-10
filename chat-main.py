@@ -33,17 +33,14 @@ def predict():
     else:
         return jsonify({"error": "Request body must be JSON"}), 400
     
-def main(
-    ckpt_dir: str,
-    tokenizer_path: str,
-    temperature: float = 0.6,
-    top_p: float = 0.9,
-    max_seq_len: int = 512,
-    max_batch_size: int = 8,
-    max_gen_len: Optional[int] = None,
-):
-
-    app.run(debug=True)
+def main():
+    ckpt_dir =  "llama-2-7b-chat/"
+    tokenizer_path = "tokenizer.model"
+    temperature = 0.6
+    top_p = 0.9
+    max_seq_len = 512
+    max_batch_size = 8
+    max_gen_len: 2048
 
     generator = Llama.build(
         ckpt_dir=ckpt_dir,
@@ -54,5 +51,6 @@ def main(
     
 
 if __name__ == "__main__":
-    fire.Fire(main)
-
+    global generator
+    main()
+    app.run(debug=True)

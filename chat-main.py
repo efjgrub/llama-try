@@ -1,10 +1,7 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
-# This software may be used and distributed according to the terms of the Llama 2 Community License Agreement.
-
 from typing import List, Optional
 import fire
 from llama import Llama, Dialog
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -14,9 +11,9 @@ def predict():
     ]
     results = generator.chat_completion(
         dialogs,  # type: ignore
-        max_gen_len=max_gen_len,
-        temperature=temperature,
-        top_p=top_p,
+        max_gen_len=2048,
+        temperature=0.3,
+        top_p=0.9,
     )
 
     for dialog, result in zip(dialogs, results):
@@ -35,18 +32,16 @@ def predict():
         return jsonify({"sucess": "Lets to predict"}) 
     else:
         return jsonify({"error": "Request body must be JSON"}), 400
-
-# Command line
-# torchrun --nproc_per_node 1 chat-main.py 
-
-if __name__ == "__main__":
-    ckpt_dir = 'llama-2-7b-chat/'
-    tokenizer_path = "tokenizer.model"
-    temperature  = 0.6
-    top_p = 0.9
-    max_seq_len = 512
-    max_batch_size = 8
-    max_gen_len = None
+    
+def main(
+    ckpt_dir: str,
+    tokenizer_path: str,
+    temperature: float = 0.6,
+    top_p: float = 0.9,
+    max_seq_len: int = 512,
+    max_batch_size: int = 8,
+    max_gen_len: Optional[int] = None,
+):
 
     generator = Llama.build(
         ckpt_dir=ckpt_dir,
@@ -54,5 +49,9 @@ if __name__ == "__main__":
         max_seq_len=max_seq_len,
         max_batch_size=max_batch_size,
     )
-
     app.run(debug=True)
+    
+
+if __name__ == "__main__":
+    fire.Fire(main)
+

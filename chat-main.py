@@ -43,16 +43,16 @@ def main(
     max_gen_len: Optional[int] = None,
 ):
 
+    app.run(debug=True)
+
     generator = Llama.build(
         ckpt_dir=ckpt_dir,
         tokenizer_path=tokenizer_path,
         max_seq_len=max_seq_len,
         max_batch_size=max_batch_size,
     )
-    app.run(debug=True)
     
 
 if __name__ == "__main__":
-    global generator
     fire.Fire(main)
 

@@ -19,9 +19,9 @@ import os
 
 parser = argparse.ArgumentParser(description="Llama 2 Flask API")
 
-parser.add_argument('--model', type=str, default='7b-chat', help='The model name (str)')
-parser.add_argument('--host', type=str, default='127.0.0.1', help='API host (str)')
-parser.add_argument('--port', type=int, default=5000, help='API port (int)')
+parser.add_argument('--model', type=str, default='13b-chat', help='The model name (str)')
+parser.add_argument('--host', type=str, default='0.0.0.0', help='API host (str)')
+parser.add_argument('--port', type=int, default=12384, help='API port (int)')
 parser.add_argument('--max_seq_len', type=int, default=512, help='Maximum sequence length (int)')
 parser.add_argument('--backend', type=str, default='nccl', help='Backend (nccl for GPU, gloo for CPU) (str)')
 parser.add_argument('--temperature', type=float, default=0.6, help='Temperature for sampling (float)')
